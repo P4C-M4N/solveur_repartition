@@ -6,9 +6,9 @@ from gurobipy import GRB
 # Creation of the  teachers
 fred = Teacher("fred",15, 17, [sixieme, troisieme])
 sandra = Teacher("sandra", 18, 20, [sixieme, cinquieme, troisieme])
-jerome = Teacher("jerome", 18, 18.5, [sixieme, cinquieme, quatrieme, troisieme])
+jerome = Teacher("jerome", 18, 20, [sixieme, cinquieme, quatrieme, troisieme])
 myriam = Teacher("myriam", 18, 20, [sixieme, cinquieme, quatrieme])
-mary = Teacher("mary", 18, 19, [sixieme, cinquieme, troisieme])
+mary = Teacher("mary", 18, 20, [sixieme, cinquieme, troisieme])
 bmp = Teacher("bmp", 7, 13, [cinquieme, quatrieme])
 
 all_teachers = [fred, sandra, jerome, myriam, mary, bmp]
@@ -39,6 +39,11 @@ for teacher in all_teachers:
 # Add constraints for the total number of groups per level
 for level in all_levels:
     model.addConstr(gp.quicksum(teacher.repartition[level.name] for teacher in all_teachers) == level.nb_groups, f"total_{level.name}")
+
+# Add constraints for the maximum number of groups in 6eme and 5eme: a teacher can teach at most 2 groups in 6eme and 5eme
+for teacher in all_teachers:
+    model.addConstr(teacher.repartition[sixieme.name] <= 2, f"max_6eme_{teacher.name}")
+    model.addConstr(teacher.repartition[cinquieme.name] <= 2, f"max_5eme_{teacher.name}")
 
 # Found all the solutions
 model.optimize()
