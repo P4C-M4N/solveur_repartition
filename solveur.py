@@ -86,9 +86,9 @@ model.addConstr(gp.quicksum(variables[f"jerome_{level}"] for level in levels) <=
 model.addConstr(gp.quicksum(variables[f"jerome_{level}"] for level in levels) >= 18, "jerome_min")
 
 # BMP
-model.addConstr(k_variables[f"k_BMP_{bmp_levels_forbidden[0]}"] == 0, "BMB_contrainte_no_grp_1")
-model.addConstr(k_variables[f"k_BMP_{bmp_levels_forbidden[1]}"] == 0, "BMB_contrainte_no_grp_2")
-model.addConstr(k_variables[f"k_BMP_{bmp_levels_allow[0]}"]+k_variables[f"k_BMP_{bmp_levels_allow[1]}"] == bmp_nb_grp, "BMP_grp_yes")
+for level in bmp_levels_forbidden:
+    model.addConstr(k_variables[f"k_BMP_{level}"] == 0, f"BMP_{level}_no")
+model.addConstr(gp.quicksum(k_variables[f"k_BMP_{level}"] for level in levels) == bmp_nb_grp, "BMP_contrainte_nb_grp")
 
 
 
@@ -129,7 +129,7 @@ model.addConstr(gp.quicksum(binary_mary[level] for level in levels) <= 3, "mary_
 model.addConstr(gp.quicksum(binary_myriame[level] for level in levels) <= 3, "myriame_levels")
 model.addConstr(gp.quicksum(binary_sandra[level] for level in levels) <= 3, "sandra_levels")
 #model.addConstr(gp.quicksum(binary_jerome[level] for level in levels) == 2, "jerome_levels")
-#model.addConstr(gp.quicksum(binary_BMP[level] for level in levels) == 2, "BMP_levels")
+#model.addConstr(gp.quicksum(binary_BMP[level] for level in levels) <= 2, "BMP_levels")
 
 
 
@@ -141,6 +141,7 @@ model.setObjective(objective, GRB.MINIMIZE)
 
 # Optimize the model
 model.optimize()
+
 
 # Check if the optimization was successful
 if model.Status == GRB.OPTIMAL:
