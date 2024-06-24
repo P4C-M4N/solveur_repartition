@@ -13,6 +13,8 @@ class Teacher:
             level.name: 0 for level in all_levels
         }
 
+        
+
 # Enumeration of possible levels: 6_eme, 5_eme, 4_eme, 3_eme. Each level is characterized by a name and a volume of hours
 class Level:
     def __init__(self, name, volume_hours, nb_groups=1):
