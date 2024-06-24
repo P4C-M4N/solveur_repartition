@@ -4,12 +4,12 @@ from gurobipy import GRB
 
 
 # Creation of the  teachers
-fred = Teacher(15, 17, [sixieme, troisieme])
-sandra = Teacher(18, 20, [sixieme, cinquieme, troisieme])
-jerome = Teacher(18, 18.5, [sixieme, cinquieme, quatrieme, troisieme])
-myriam = Teacher(18, 20, [sixieme, cinquieme, quatrieme])
-mary = Teacher(18, 19, [sixieme, cinquieme, troisieme])
-bmp = Teacher(7, 13, [cinquieme, quatrieme])
+fred = Teacher("fred",15, 17, [sixieme, troisieme])
+sandra = Teacher("sandra", 18, 20, [sixieme, cinquieme, troisieme])
+jerome = Teacher("jerome", 18, 18.5, [sixieme, cinquieme, quatrieme, troisieme])
+myriam = Teacher("myriam", 18, 20, [sixieme, cinquieme, quatrieme])
+mary = Teacher("mary", 18, 19, [sixieme, cinquieme, troisieme])
+bmp = Teacher("bmp", 7, 13, [cinquieme, quatrieme])
 
 all_teachers = [fred, sandra, jerome, myriam, mary, bmp]
 
@@ -21,7 +21,7 @@ model = gp.Model("Repartition Problem")
 for teacher in all_teachers:
     for level in all_levels:
         var_name = f"{teacher.name}_{level.name}"
-        teacher.repartition[level.name] = model.addVar(vtype=GRB.CONTINUOUS, name=var_name, lb=0)
+        teacher.repartition[level.name] = model.addVar(vtype=GRB.INTEGER, name=var_name, lb=0)
 
 # Add constraints for each teacher based on the number of hours taught
 for teacher in all_teachers:
@@ -39,4 +39,16 @@ for teacher in all_teachers:
 # Add constraints for the total number of groups per level
 for level in all_levels:
     model.addConstr(gp.quicksum(teacher.repartition[level.name] for teacher in all_teachers) == level.nb_groups, f"total_{level.name}")
+
+# Found all the solutions
+model.optimize()
+
+# Print all the solutions: for each teacher and each level, print the number of classes taught and 
+# for each teacher the total of hours taught
+for teacher in all_teachers:
+    print(f"Teacher {teacher.name}")
+    for level in all_levels:
+        print(f"Level {level.name}: {teacher.repartition[level.name].x}")
+    print(f"Total hours: {sum(teacher.repartition[level.name].x * level.volume_hours for level in teacher.wanted_levels_taught)}")
+    print()
 

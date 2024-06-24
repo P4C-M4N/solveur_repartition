@@ -3,7 +3,8 @@
 
 # class Teacher describing some teachers characteristics: min_hours_of_work, max_hours_of_work, levels_taught, and the number of levels taught, a repartition as a map where keys are the levels and values are the number of class taught for each level
 class Teacher:
-    def __init__(self, min_hours_of_work, wanted_max_hours_of_work, wanted_levels_taught):
+    def __init__(self, name, min_hours_of_work, wanted_max_hours_of_work, wanted_levels_taught):
+        self.name = name
         self.min_hours_of_work = min_hours_of_work
         self.max_hours_of_work = wanted_max_hours_of_work
         self.wanted_levels_taught = wanted_levels_taught
