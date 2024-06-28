@@ -1,0 +1,119 @@
+{
+    "teachers": [
+        {
+            "name": "Fred",
+            "min_hour": "15",
+            "max_hour": "17",
+            "levels": [
+                "Sixieme",
+                "Cinquieme",
+                "Quatrieme",
+                "Troisieme"
+            ],
+            "minimize_hours": false,
+            "minimize_levels": false
+        },
+        {
+            "name": "Sandra",
+            "min_hour": "18",
+            "max_hour": "20",
+            "levels": [
+                "Sixieme",
+                "Cinquieme",
+                "Troisieme",
+                "Quatrieme"
+            ],
+            "minimize_hours": false,
+            "minimize_levels": false
+        },
+        {
+            "name": "Jerome",
+            "min_hour": "18",
+            "max_hour": "20",
+            "levels": [
+                "Sixieme",
+                "Cinquieme",
+                "Quatrieme",
+                "Troisieme"
+            ],
+            "minimize_hours": true,
+            "minimize_levels": true
+        },
+        {
+            "name": "Myriam",
+            "min_hour": "18",
+            "max_hour": "20",
+            "levels": [
+                "Sixieme",
+                "Cinquieme",
+                "Troisieme",
+                "Quatrieme"
+            ],
+            "minimize_hours": false,
+            "minimize_levels": false
+        },
+        {
+            "name": "Mary",
+            "min_hour": "18",
+            "max_hour": "20",
+            "levels": [
+                "Troisieme",
+                "Quatrieme",
+                "Cinquieme",
+                "Sixieme"
+            ],
+            "minimize_hours": true,
+            "minimize_levels": true
+        },
+        {
+            "name": "BMP",
+            "min_hour": "7",
+            "max_hour": "13",
+            "levels": [
+                "Sixieme",
+                "Cinquieme",
+                "Troisieme",
+                "Quatrieme"
+            ],
+            "minimize_hours": false,
+            "minimize_levels": false
+        }
+    ],
+    "levels": [
+        {
+            "name": "Sixieme",
+            "volume_hour": "4.5",
+            "num_groups": "7",
+            "max_group_teacher": "2"
+        },
+        {
+            "name": "Cinquieme",
+            "volume_hour": "3.5",
+            "num_groups": "9",
+            "max_group_teacher": "2"
+        },
+        {
+            "name": "Quatrieme",
+            "volume_hour": "3.5",
+            "num_groups": "6",
+            "max_group_teacher": "10"
+        },
+        {
+            "name": "Troisieme",
+            "volume_hour": "4",
+            "num_groups": "5",
+            "max_group_teacher": "10"
+        }
+    ],
+    "level_constraints": [
+        {
+            "teacher": "BMP",
+            "levels": [
+                "Sixieme",
+                "Cinquieme"
+            ],
+            "min_groups": 0,
+            "max_groups": 1
+        }
+    ]
+}
